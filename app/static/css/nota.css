@@ -1,0 +1,54 @@
+/* general body css */
+body {
+    font-size: 14pt;
+    font-family: Verdana, Arial, sans-serif;
+}
+
+.new_page {
+    page-break-after: always;
+}
+
+
+
+/* Nota Content */
+.nota_subject {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Nota groet */
+.valediction { margin-bottom: 50px; }
+
+/* Nota tabel css*/
+.nota_tabel_container{
+    position: relative;
+    left: 2px;
+}
+.nota_tabel{
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.nota_tabel tr {
+    border: 1px solid black;
+}
+.nota_tabel .total {
+    border-top: 2px solid black;
+}
+.nota_tabel th {
+    border-bottom: 2px solid black;
+    text-align: left;
+}
+.nota_tabel .number
+{
+    text-align: right;
+}
+.omschrijving
+{
+    padding-right: 25px !important;
+}
+.nota_tabel th, .nota_tabel td
+{
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}

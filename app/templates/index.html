@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<h1>Nota gegevens</h1>
+
+<div id="menu">
+<a class="button icon square big color-p700" href="{{ url_for('create_pdf', id=0, token=token) }}" title="Alle Notas Printen">
+    <span class="material-icons big">print</span>        
+</a>
+</div>
+
+<div id="main_content">
+    <table class="data_table">
+        <tr>
+            <th>Aanhef</th>
+            <th>Naam</th>
+            <th>Contr.</th>
+            <th>Pacht</th>
+            <th># Tuin</th>
+            <th>Borg</th>
+            <th>Plgn</th>
+            <th>Rotr</th>
+            <th>Overig</th>
+            <th>Totaal</th>
+            <th>Acties</th>
+        </tr>
+        <tr class="new_entry">
+            {% if id is none %}
+            <form action="{{ url_for('update') }}" method="post" id="new_entry_form">
+            {{ form.hidden_tag() }}
+            <td>{{ form.aanhef() }}</td>
+            <td>{{ form.naam(size=13) }}</td>
+            <td>{{ form.contributie(size=5) }}</td>
+            <td>{{ form.pacht(size=5) }}</td>
+            <td>{{ form.nr_tuinen(size=5) }}</td>
+            <td>{{ form.borg(size=5) }}</td>
+            <td>{{ form.ploegen(size=5) }}</td>
+            <td>{{ form.roteren(size=5) }}</td>
+            <td>{{ form.overig(size=5) }}</td>
+            <td></td>
+            <td>
+                <span class="button_field">
+                    <a class="button icon square color-p700 border-p800" 
+                        href="" onclick="document.getElementById('new_entry_form').submit();return false;">
+                        <span class="material-icons">add_circle</span>
+                    </a>
+                </span>
+            </td>
+            </form>
+            {% else %}
+            <td class="inactive" colspan="11">Nieuwe Nota Invoeren Inactief</td>
+            {% endif %}
+        </tr>
+    {% for nota in notas %}
+        {% if id == nota.id %}        
+        <tr id="{{ nota.id }}" class="edit_entry">
+            <form action="{{ url_for('update', id=nota.id) }}" method="post" id="edit_form">
+            {{ form.hidden_tag() }}
+            <td>{{ form.aanhef() }}</td>
+            <td>{{ form.naam(size=13) }}</td>
+            <td>{{ form.contributie(size=5) }}</td>
+            <td>{{ form.pacht(size=5) }}</td>
+            <td>{{ form.nr_tuinen(size=5) }}</td>
+            <td>{{ form.borg(size=5) }}</td>
+            <td>{{ form.ploegen(size=5) }}</td>
+            <td>{{ form.roteren(size=5) }}</td>
+            <td>{{ form.overig(size=5) }}</td>
+            <td>{{ nota.totaal }}</td>
+            <td>
+                <span class="button_field">
+                    <a class="button icon square color-p600 border-p700" 
+                        href="" onclick="document.getElementById('edit_form').submit();return false;">
+                        <span class="material-icons">save</span>
+                    </a>
+                </span>
+            </td>
+            </form>
+        </tr>
+        {% else %}
+        <tr id="{{ nota.id }}">
+            <td>{{ nota.aanhef }}</td>
+            <td>{{ nota.naam }}</td>
+            <td>{{ nota.contributie | valuta }}</td>
+            <td>{{ nota.pacht | valuta  }}</td>
+            <td>{{ nota.nr_tuinen | tuinen }}</td>
+            <td>{{ nota.borg | valuta }}</td>
+            <td>{{ nota.ploegen | valuta }}</td>
+            <td>{{ nota.roteren | valuta }}</td>
+            <td>{{ nota.overig | valuta }}</td>
+            <td>{{ nota.totaal | valuta }}</td>
+            <td>
+                <span class="button_field">
+                    <a class="button icon square color-p600" title="Nota Aanpassen" href="{{ url_for('index', id=nota.id, _anchor=nota.id) }}">
+                        <span class="material-icons">edit</span>
+                    </a>
+                    <a class="button icon square color-p600" title="Nota Printen" href="{{ url_for('create_pdf', id=nota.id, token=token) }}" style="margin-left: 10px;">
+                        <span class="material-icons">print</span>
+                    </a>
+                    <a class="button icon square color-red" title="Nota Verwijderen" href="{{ url_for('delete', id=nota.id) }}" style="margin-left: 10px;">
+                        <span class="material-icons">delete_forever</span> 
+                    </a>
+                </span>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
